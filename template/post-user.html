@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LRC的Blog小站</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/ue/ueditor.config.js"></script>
+    <script type="text/javascript" src="/ue/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="/ue/lang/zh-cn/zh-cn.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/LRC's-Blog.css"/>
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+    <script type="text/javascript">
+        var ue = UE.getEditor('content',{
+            initialFrameHeight:400,
+            autoHeightEnabled:false
+        });
+    </script>
+</head>
+<body>
+<!-- 顶部Logo和Slogan区域 -->
+<div class="header" style="border-radius: 0px">
+    <div class="container" style="height: 100px">
+        <div class="row">
+            <div class="col-sm-2 col-5" style="padding-top: 10px">
+                <a href="/">
+                    <img src="/img/logo.jpg" width="80" height="80">
+                </a>
+            </div>
+            <div class="col-5 d-none d-sm-block" style="text-align: center;padding-top: 24px">
+                <h2>LRC's Blog</h2>
+            </div>
+            <div class="col-5 d-none d-sm-block" style="text-align: right;padding-top: 24px">
+                <h2>No Cross No Crown</h2>
+            </div>
+            <div class="col-7 d-sm-none" style="text-align: center;padding-top: 24px">
+                <h2>LRC‘s Blog</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--导航-->
+<div class="menu">
+    <div class="container" style="padding: 0px">
+        <nav class="navbar navbar-expand-lg navbar-dark menu-bar" style="background-color: deepskyblue">
+            <a class="navbar-brand" href="#">导航</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link" href="/type/1">Python</a>
+                    <a class="nav-item nav-link" href="/type/2">C/C++</a>
+                    <a class="nav-item nav-link" href="/type/3">Java</a>
+                    <a class="nav-item nav-link" href="/type/4">Web前端</a>
+                    <a class="nav-item nav-link" href="/type/5">数据科学</a>
+                    <a class="nav-item nav-link" href="/type/6">机器学习</a>
+                    <a class="nav-item nav-link" href="/type/7">其他</a>
+                    <a class="nav-item nav-link" href="/type/8">杂谈</a>
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-item nav-link" href="#">友链</a>
+                    <a class="nav-item nav-link" href="#" data-toggle="modal" data-target="#mymodal">登录</a>
+                    <a class="nav-item nav-link" href="#">注册</a>
+                    <a class="nav-item nav-link" href="#">用户中心</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- 中部设计-->
+<div class="container">
+    <div class="row">
+        <div class="col-12">文章标题
+            <input type="text" class="form-control">
+        </div>
+        <div class="col-12">
+            <script id="content" type="text/plain"></script>
+        </div>
+    </div>
+</div>
+
+
+<!-- 底部设计-->
+<div class="container-fluid footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 left">
+                <p>Copyright &copy;
+                    <a href="#" target="_blank" rel="nofollow">LRC</a>
+                </p>
+                <p>备案号:<a href="https://beian.miit.gov.cn">鄂ICP备2021014500号</a></p>
+            </div>
+            <div class="col-6 right">
+                <p>联系我</p>
+                <p>&nbsp;&nbsp;&nbsp;QQ:2211906663</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 登录和注册(静态)模态框-->
+<div class="modal fade" id="mymodal" data-backdrop="static" tabindex="-1"
+     role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- 在模态框内部配置Tab选项卡，用于切换登录和注册窗口 -->
+            <div class="tabbable" id="tabs" style="background-color: #337AB7; height: 50px;padding: 5px 20px;">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <!-- 与登录和注册窗口的ID进行关联 -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li id="login" class="nav-item active">
+                        <a href="#login-panel" data-toggle="tab" class="nav-link" style="color: midnightblue">登录</a>
+                    </li>
+                    <li id="reg" class="nav-item">
+                        <a href="#register-panel" data-toggle="tab" class="nav-link" style="color: midnightblue">注册</a>
+                    </li>
+                    <li id="reg" class="nav-item">
+                        <a href="#find-password-panel" data-toggle="tab" class="nav-link" style="color: midnightblue">找回密码</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 登录窗口 -->
+            <div class="tab-content">
+                <div class="tab-pane container active" id="login-panel">
+                    <div class="modal-content" style="margin: 20px 0px;">
+                        <div class="modal-body">
+                            <div class="form-group row" style="margin-top: 20px;">
+                                <label for="login-name" class="col-4">&nbsp;&nbsp;登录邮箱：</label>
+                                <input type="text" id="login-name" class="form-control col-7" placeholder="请输入你的邮箱地址"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="login-password" class="col-4">&nbsp;&nbsp;登录密码：</label>
+                                <input type="password" id="login-password" class="form-control col-7" placeholder="请输入你的登录密码"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="login-code" class="col-4"> &nbsp;&nbsp;图片验证码：</label>
+                                <input type="text" id="login-code" class="form-control col-5" placeholder="请输入右侧的验证码"/>
+                                <img src="/vcode" id="loginvcode" class="col-3" style="cursor:pointer;"/>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">登录</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            <!-- 注册窗口 -->
+            <div class="tab-pane container" id="register-panel">
+                <div class="modal-content">
+                    <div class="modal-content" style="margin: 20px 0px;">
+                        <div class="modal-body">
+                            <div class="form-group row" style="margin-top: 20px;">
+                                <label for="register-name" class="col-4">&nbsp;&nbsp;注册邮箱：</label>
+                                <input type="text" id="register-name" class="form-control col-7" placeholder="请输入你的邮箱地址"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="register-password" class="col-4">&nbsp;&nbsp;注册密码：</label>
+                                <input type="password" id="register-password" class="form-control col-7" placeholder="请输入你的注册密码"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="register-code" class="col-4">&nbsp;&nbsp;邮箱验证码：</label>
+                                <input type="text" id="register-code" class="form-control col-4" placeholder="请输入邮箱验证码"/>
+                                <button type="button" class="btn btn-primary col-3">发送邮件</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <span>注册时请使用邮箱地址，便于找回密码。&nbsp;&nbsp;</span>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">注册</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- 找回密码窗口 -->
+            <div class="tab-pane container" id="find-password-panel">
+                <div class="modal-content">
+                    <div class="modal-content" style="margin: 20px 0px;">
+                        <div class="modal-body">
+                            <div class="form-group row" style="margin-top: 20px;">
+                                <label for="find-password-name" class="col-4">&nbsp;&nbsp;注册邮箱：</label>
+                                <input type="text" id="find-password-name" class="form-control col-7" placeholder="请输入你的邮箱地址"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="find-password-password" class="col-4">&nbsp;&nbsp;新的密码：</label>
+                                <input type="password" id="find-password-password" class="form-control col-7" placeholder="请输入你的注册密码"/>
+                            </div>
+                            <div class="form-group row">
+                                <label for="find-password-code" class="col-4">&nbsp;&nbsp;邮箱验证码：</label>
+                                <input type="text" id="find-password-code" class="form-control col-4" placeholder="请输入邮箱验证码"/>
+                                <button type="button" class="btn btn-primary col-3">发送邮件</button>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <span>请输入注册邮箱地址并重置密码。&nbsp;&nbsp;</span>
+                            <button type="button" class="btn btn-dark" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary">找回密码</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+</body>
+</html>

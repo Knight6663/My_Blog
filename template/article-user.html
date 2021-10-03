@@ -1,0 +1,60 @@
+{% extends 'base.html' %}   {# 将当前页面继承至base.html母版 #}
+{% block content %}
+
+        <div class="col-sm-9 col-12" style="padding: 0px">
+            <div class="col-12 row article-detail">
+                <!-- 标题-->
+                <div class="col-sm-9 col-8 title">
+                    {% set article = article_result[0] %}
+                    {{article.headline}}
+                </div>
+                <!-- 收藏-->
+                <div class="col-sm-3 col-4 favorite">
+                    <label><span class="oi oi-heart" aria-hidden="true"></span> 收藏本文</label>
+                </div>
+                <!-- 具体信息-->
+                <div class="col-12 info">作者:{{article_result.nickname}}&nbsp;&nbsp;&nbsp;类别:{{article_type[article.sort_id | string]}}&nbsp;&nbsp;&nbsp;
+                        日期:{{article.create_time}}&nbsp;&nbsp;&nbsp;阅读:{{article.read_count}}次&nbsp;&nbsp;&nbsp;
+                </div>
+                <!-- 正文-->
+                <div class="col-12 content">
+                    {{article.content | safe}}
+                </div>
+            </div>
+
+            <!-- 小导航-->
+            <div class="col-sm-12 col-12 article-nav">
+                <div class="col-12">版权所有，转载本站文章请注明出处:LRC's Blog， http://www.lrc666.xyz/article/{{article.article_id}}</div>
+                <div class="col-12"><a href="/article/{{prev_next.prev_id}}">上一篇：{{prev_next.prev_headline}}</a></div>
+                <div class="col-12"><a href="/article/{{prev_next.next_id}}">下一篇：{{prev_next.next_headline}}</a></div>
+            </div>
+
+            <!-- 文章评论-->
+            <div class="col-12 article-comment">
+                <div class="col-12 row">
+                    <div class="col-sm-2 col-4">
+                        <label for="nickname">您的昵称:</label>
+                    </div>
+                    <div class="col-sm-10 col-8">
+                        <input type="text" id="nickname" class="form-control"/>
+                    </div>
+                </div>
+                <div class="col-12 row">
+                    <div class="col-sm-2 col-4">
+                        <label for="comment">您的评论:</label>
+                    </div>
+                    <div class="col-sm-10 col-8">
+                        <textarea class="form-control" style="height: 100px" id="comment"></textarea>
+                    </div>
+                </div>
+                <div class="col-12 row">
+                    <div class="col-12" style="text-align: right">
+                        <button class="btn btn-primary">发表评论</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'side.html' %}
+
+{% endblock %}

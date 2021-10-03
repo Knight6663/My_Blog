@@ -1,0 +1,254 @@
+body {
+    background-image: linear-gradient(to right,#bb313e25, #bb313e25,
+    #d7222925, #dd4a1625, #e4761525, #f5c50025, #f0e92725, #b1ce2425,
+    #48a93525, #03944525, #157c4f25, #176a5825, #1b556325, #1d386f25,
+    #1d386f25, #20277825, #52266325, #8a244b25);
+}
+
+@media (min-width: 1300px) {
+    .container {
+        max-width: 1300px;
+    }
+}
+
+/*全站超链接样式*/
+a:link ,a:visited{
+    text-decoration: none;
+    color: #337ab7;
+}
+
+a:hover, a:active{
+    text-decoration: none;
+    color: hotpink;
+}
+
+/*全站DIV添加圆角*/
+div{
+    border-radius: 7px;
+}
+label{
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.header {
+    border-top: solid 3px black;
+}
+
+.menu {
+    border-top: solid 2px darkblue;
+    background-color: deepskyblue;
+}
+
+.menu .menu-bar a:link {
+    color: white;
+}
+
+.menu .menu-bar a:hover {
+    color: hotpink;
+}
+
+/*文章样式*/
+.article-list{
+    border: solid 1px #cccccc;
+    margin: 10px 0px;
+    background-color: whitesmoke;
+    padding: 15px 0px;
+}
+.article-list .thumb{
+    margin: 0px;
+    padding: 2px 10px 0px 0px;
+}
+.article-list .detail{
+    padding: 0px 10px;
+}
+.article-list .detail{
+    padding: 0px 10px;
+}
+.article-list .detail .title{
+    font-size: 22px;
+    color: #e56244;
+    margin-bottom: 10px;
+}
+.article-list .detail .info{
+    font-size: 14px;
+    color: #666666;
+    margin-bottom: 10px;
+}
+.article-list .detail .intro{
+    font-size: 16px;
+    word-break: break-all;
+    word-wrap: break-word;
+    line-height: 25px;
+}
+
+/*搜索栏样式*/
+.search-bar{
+    margin: 0px;
+    border: solid 1px #cccccc;
+    padding: 10px 0px;
+    background-color: deepskyblue;
+}
+
+/*边栏样式*/
+.sidebar{
+    border: solid 2px #cccccc;
+    margin: 10px 0px;
+    padding: 0px;
+}
+
+.sidebar .tip{
+    background-color: #333333;
+    height: 42px;
+    color: white;
+    line-height: 42px;
+    font-size: 18px;
+    text-align:center;
+    border-bottom: solid 2px dodgerblue;
+    border-radius: 0px;
+}
+
+.sidebar ul{
+    list-style: none;
+    padding-left: 10px;
+}
+
+.sidebar ul li{
+    line-height: 35px;
+}
+
+/* 分页栏样式 */
+.paginate {
+    border: solid 1px #cccccc;
+    margin: 5px 0px;
+    background-color: whitesmoke;
+    padding: 20px 0px;
+    text-align: center;
+}
+
+/*底部样式*/
+.footer {
+    background-color: #333333;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    color: white;
+}
+.footer .left {
+    font-size: 16px;
+    margin: 20px 0px;
+    text-align:center;
+}
+.footer .center {
+    font-size: 16px;
+    margin: 20px 0px;
+    text-align: center;
+}
+.footer .right {
+    font-size: 16px;
+    margin: 20px 0px;
+    text-align:center;
+}
+
+/*文章详情页面*/
+.article-detail{
+    border: solid 1px #cccccc;
+    padding: 30px 15px;
+    margin: 0px;
+}
+.article-detail .title{
+    font-size: 24px;
+    color: #5d36ea;
+}
+.article-detail .favorite{
+    text-align: right;
+    font-weight: bold;
+}
+.article-detail .info{
+    margin-top: 20px;
+    border-bottom: solid 1px #cccccc;
+    line-height: 60px;
+}
+.article-detail .content{
+    margin-top: 30px;
+}
+/*文章小导航*/
+.article-nav {
+    border: solid 1px #cccccc;
+    margin-top: 20px;
+    padding: 10px 10px 10px 20px;
+    line-height: 35px;
+}
+.article-nav div{
+    line-height: 30px;
+    text-align:center;
+}
+/*文章评论*/
+.article-comment {
+    border: solid 1px #cccccc;
+    margin-top: 20px;
+    padding: 15px 0px;
+}
+
+
+
+button.goup {
+    position: relative;
+    background: #333333;
+    border: 0;
+    padding: 14px 122px;
+    border-radius: 3px;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+    font-weight: 400;
+    font-size: 12px;
+    color: #fff;
+    letter-spacing: 0.2em;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+}
+button.goup:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -200%;
+    width: 200%;
+    height: 100%;
+    transform: skewX(-20deg);
+    background-image: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+}
+button.goup:hover:after {
+    animation: shine 0.6s ease;
+}
+button.goup:active {
+    /*transform: translateY(1em);*/
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.goup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@-moz-keyframes shine {
+    100% {
+        left: 50%;
+    }
+}
+@-webkit-keyframes shine {
+    100% {
+        left: 50%;
+    }
+}
+@-o-keyframes shine {
+    100% {
+        left: 50%;
+    }
+}
+@keyframes shine {
+    100% {
+        left: 50%;
+    }
+}

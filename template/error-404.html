@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>404 Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/error-404.css"/>
+</head>
+<body>
+<nav>
+    <div class="menu">
+        <p class="website_name">
+            <a href="/"><img src="/img/logo.jpg" width="80" height="80"></a>
+        </p>
+        <div class="menu_links">
+            <a href="" class="link">about</a>
+            <a href="" class="link">projects</a>
+            <a href="" class="link">contacts</a>
+        </div>
+        <div class="menu_icon">
+            <span class="icon"></span>
+        </div>
+    </div>
+</nav>
+
+<section class="wrapper">
+    <div class="container">
+        <div id="scene" class="scene" data-hover-only="false">
+            <div class="circle" data-depth="1.2"></div>
+            <div class="one" data-depth="0.9">
+                <div class="content">
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                </div>
+            </div>
+            <div class="two" data-depth="0.60">
+                <div class="content">
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                </div>
+            </div>
+            <div class="three" data-depth="0.40">
+                <div class="content">
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                    <span class="piece"></span>
+                </div>
+            </div>
+            <p class="p404" data-depth="0.50">404</p>
+            <p class="p404" data-depth="0.10">404</p>
+        </div>
+        <div class="text">
+            <article>
+                <p>Uh oh! 你 貌 似 迷 路 了,<br>点  击  返  回  主  页<br>或 10秒 后 自 动 跳 转 主 页</p>
+                <button><a target="_blank" href="/" class="more-link">返 回 首 页</a></button>
+            </article>
+        </div>
+    </div>
+</section>
+
+<script>
+    setTimeout(function (){
+        location.href = '/';
+    }, 10000);
+</script>
+</body>
+</html>
