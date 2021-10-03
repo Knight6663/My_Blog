@@ -150,3 +150,16 @@ class Article(DBase):
         d['next_headline'] = self.find_headline_by_id(next_id)
 
         return d
+
+    def upadte_reply_count(self, article_id):
+        """
+        当发表或回复评论之后，为文章表字段reply_count加1
+        :param article_id: 文章id
+        :return: None
+        """
+        row = db_session.query(Article).filter_by(article_id=article_id).first()
+        row.reply_count += 1
+        try:
+            db_session.commit()
+        except:
+            db_session.rollback()

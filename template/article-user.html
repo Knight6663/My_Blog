@@ -4,14 +4,14 @@
         <div class="col-sm-9 col-12" style="padding: 0px">
             <div class="col-12 row article-detail">
                 <!-- 标题-->
-                <div class="col-sm-9 col-8 title">
+                <div class="col-12 col-sm-12 title">
                     {% set article = article_result[0] %}
                     {{article.headline}}
                 </div>
                 <!-- 收藏-->
-                <div class="col-sm-3 col-4 favorite">
-                    <label><span class="oi oi-heart" aria-hidden="true"></span> 收藏本文</label>
-                </div>
+<!--                <div class="col-sm-3 col-4 favorite">-->
+<!--                    <label><span class="oi oi-heart" aria-hidden="true"></span> 收藏本文</label>-->
+<!--                </div>-->
                 <!-- 具体信息-->
                 <div class="col-12 info">作者:{{article_result.nickname}}&nbsp;&nbsp;&nbsp;类别:{{article_type[article.sort_id | string]}}&nbsp;&nbsp;&nbsp;
                         日期:{{article.create_time}}&nbsp;&nbsp;&nbsp;阅读:{{article.read_count}}次&nbsp;&nbsp;&nbsp;

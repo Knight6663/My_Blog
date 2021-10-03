@@ -8,7 +8,7 @@ from sqlalchemy import MetaData
 
 def db_connect():
     from main import db
-    Session = db.sessionmaker(bind=db.engine)
+    Session = db.sessionmaker()
     db_session = Session()
     DBase = db.Model
     metadata = MetaData(bind=db.engine)

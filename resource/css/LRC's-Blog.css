@@ -158,7 +158,8 @@ label{
     margin: 0px;
 }
 .article-detail .title{
-    font-size: 24px;
+    font-size: 30px;
+    text-align: center;
     color: #5d36ea;
 }
 .article-detail .favorite{
@@ -169,6 +170,8 @@ label{
     margin-top: 20px;
     border-bottom: solid 1px #cccccc;
     line-height: 60px;
+    text-align: center;
+    font-size: 20px;
 }
 .article-detail .content{
     margin-top: 30px;

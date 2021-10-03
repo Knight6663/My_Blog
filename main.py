@@ -99,4 +99,8 @@ if __name__ == '__main__':
 
     app.register_blueprint(article)
 
+    from controller.comment import *
+
+    app.register_blueprint(comment)
+
     app.run(debug=True)
