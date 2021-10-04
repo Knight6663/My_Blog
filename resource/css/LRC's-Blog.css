@@ -187,11 +187,45 @@ label{
     line-height: 30px;
     text-align:center;
 }
-/*文章评论*/
+/* 文章评论 */
 .article-comment {
     border: solid 1px #cccccc;
-    margin-top: 20px;
-    padding: 15px 0px;
+    margin: 10px 0px;
+    background-color: whitesmoke;
+    padding: 20px 0px 10px 0px;
+    line-height: 35px;
+}
+.article-comment .list {
+    margin: 0px 0px 10px 0px;
+    border-top: solid 1px #cccccc;
+    padding-top: 10px;
+}
+.article-comment .list .icon {
+    margin: 0px;
+    padding-top: 10px;
+    text-align: right;
+}
+.article-comment .list .icon img {
+    margin-right: 30px;
+}
+.article-comment .list .comment {
+    padding: 0px 0px;
+}
+.article-comment .list .comment .commenter {
+    font-size: 14px;
+    color: #666666;
+}
+.article-comment .list .comment .content {
+    font-size: 16px;
+    padding-left: 0px;
+}
+.article-comment .list .comment .reply {
+    text-align: right;
+}
+.article-comment .list .comment .reply label{
+    font-weight: normal;
+    color: #337AB7;
+    cursor: pointer;
 }
 
 
