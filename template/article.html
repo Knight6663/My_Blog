@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        {% for comment in comment_result %}
+        {% for comment in comment_list %}
         <div class="col-12 list row">
             <div class="col-2 icon">
                 <img src="/avatar/1.png" class="img-fluid" style="'width:70px"/>
@@ -70,10 +70,10 @@
                         <label onclick="gotoReply('{{comment.comment_id}}')">
                             <span class="oi oi-arrow-circle-bottom" aria-hidden="true"></span>回复
                         </label>&nbsp;&nbsp;
-                        <label>
+                        <label onclick="agreeComment(this,'{{comment.comment_id}}')">
                             <span class="oi oi-chevron-bottom" aria-hidden="true"></span> 赞成 (<span>{{comment.agree_count}}</span>)
                         </label>&nbsp;&nbsp;
-                        <label>
+                        <label onclick="disagreeComment(this,'{{comment.comment_id}}')">
                             <span class="oi oi-x" aria-hidden="true"></span> 反对 (<span>{{comment.disagree_count}}</span>)
                         </label>
                     </div>
@@ -83,6 +83,42 @@
                 </div>
             </div>
         </div>
+        {% if comment['reply_list'] %}
+        {% for reply in comment['reply_list'] %}
+        <div class="col-12 list row">
+            <div class="col-2 icon">
+                <img src="/avatar/1.png" class="img-fluid" style="width:50px"/>
+            </div>
+            <div class="col-10 comment" style="border: solid 1px #ccc">
+                <div class="col-12 row" style="padding-left: 15px">
+                    {% if reply.nickname == None or reply.nickname == ''%}
+                    <div class="col-7 commenter">无名氏&nbsp;&nbsp;&nbsp;{{reply.create_time}}</div>
+                    {% else %}
+                    {% if comment.nickname ==None or comment.nickname == '' %}
+                    <div class="col-7 commenter" style="color: #337ab7">{{reply.nickname}}&nbsp;&nbsp;回复&nbsp;&nbsp;无名氏&nbsp;{{reply.create_time}}</div>
+                    {% else %}
+                    <div class="col-7 commenter" style="color: #337ab7">{{reply.nickname}}&nbsp;&nbsp;回复&nbsp;&nbsp;{{comment.nickname}}&nbsp;{{reply.create_time}}</div>
+                    {% endif %}
+                    {% endif %}
+                    <div class="col-5 reply">
+<!--                        <label onclick="gotoReply('{{reply.comment_id}}')">-->
+<!--                            <span class="oi oi-arrow-circle-bottom" aria-hidden="true"></span>回复-->
+<!--                        </label>&nbsp;&nbsp;-->
+                        <label onclick="agreeComment(this,'{{reply.comment_id}}')">
+                            <span class="oi oi-chevron-bottom" aria-hidden="true"></span> 赞成 (<span>{{reply.agree_count}}</span>)
+                        </label>&nbsp;&nbsp;
+                        <label onclick="disagreeComment(this,'{{reply.comment_id}}}')">
+                            <span class="oi oi-x" aria-hidden="true"></span> 反对 (<span>{{reply.disagree_count}}</span>)
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12">
+                    {{reply.content}}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
 
         {% endfor %}
     </div>
@@ -145,6 +181,41 @@
                 bootbox.alert({title:"错误提示", message:"回复评论出错，请联系管理员!"});
             }
         });
+    }
+
+
+    function agreeComment(obj, comment_id) {
+        param = "type=1&comment_id=" + comment_id;
+        $.post('/opinion', param, function (data) {
+            // 赞成成功后，将赞成数量+1并填充到页面中
+            if (data == 'opinion-pass') {
+                // 获取到当前元素下的第2个span标签元素
+                var element = $(obj).children('span').eq(1);
+                // 获取到赞成数量，并将其转换为整数
+                var count = parseInt(element.text());
+                element.text(count+1);
+            }
+            else if (data == 'already-opinion'){
+                bootbox.alert({title:"错误提示", message:"您已经对该条评论表过态了，请勿重复点击!"});
+            }
+        })
+    }
+
+        function disagreeComment(obj, comment_id) {
+        param = "type=0&comment_id=" + comment_id;
+        $.post('/opinion', param, function (data) {
+            // 反对成功后，将反对数量-1并填充到页面中
+            if (data == 'opinion-pass') {
+                // 获取到当前元素下的第2个span标签元素
+                var element = $(obj).children('span').eq(1);
+                // 获取到赞成数量，并将其转换为整数
+                var count = parseInt(element.text());
+                element.text(count+1);
+            }
+            else if (data == 'already-opinion'){
+                bootbox.alert({title:"错误提示", message:"您已经对该条评论表过态了，请勿重复点击!"});
+            }
+        })
     }
 </script>
 

@@ -24,7 +24,7 @@ def read(article_id):
     Article().updata_read_count(article_id)  # 该文章阅读次数加1
     prev_next = Article().find_prev_and_next_by_id(article_id)  # 根据当前文章id查询上一篇和下一篇文章
 
-    comment_result = Comment().find_comment(article_id, 0, 20)  # 显示当前文章的评论
+    comment_list = Comment().get_comment_list(article_id, 0, 20)  # 显示当前文章的评论
 
-    return render_template('article-user.html', article_result=article_result, prev_next=prev_next,
-                           comment_result=comment_result)
+    return render_template('article.html', article_result=article_result, prev_next=prev_next,
+                           comment_list=comment_list)

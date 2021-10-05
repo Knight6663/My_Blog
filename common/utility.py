@@ -75,5 +75,36 @@ class ImageCode:
         return code, bstring
 
 
+def model_list(result):
+    """
+    将单个模型类转换为标准的Python List数据
+    :param result:需要转换的数据
+    :return:转换好了的list,格式为:[{},{},{}]
+    """
+    list = []
+    for row in result:
+        dict = {}
+        for k, v in row.__dict__.items():
+            if not k.startswith('_sa_instance_state'):
+                dict[k] = v
+        list.append(dict)
+    return list
+
+def model_join_list(result):
+    list = []  # 定义列表用于存放所有行
+    for obj1, obj2 in result:
+        dict = {}
+        for k1, v1 in obj1.__dict__.items():
+            if not k1.startswith('_sa_instance_state'):
+                if not k1 in dict:  # 如果字典中已经存在相同的Key则跳过
+                    dict[k1] = v1
+        for k2, v2 in obj2.__dict__.items():
+            if not k2.startswith('_sa_instance_state'):
+                if not k2 in dict:  # 如果字典中已经存在相同的Key则跳过
+                    dict[k2] = v2
+        list.append(dict)
+    return list
+
+
 if __name__ == '__main__':
     ImageCode().draw_verify_code()

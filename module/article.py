@@ -151,7 +151,7 @@ class Article(DBase):
 
         return d
 
-    def upadte_reply_count(self, article_id):
+    def update_reply_count(self, article_id):
         """
         当发表或回复评论之后，为文章表字段reply_count加1
         :param article_id: 文章id
