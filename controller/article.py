@@ -4,10 +4,12 @@
 日期:2021年10月02日23时
 """
 
-from flask import Blueprint, render_template, abort
+from flask import Blueprint, render_template, abort, request, session
 
+from common.utility import parse_image_url, generate_thumb
 from module.article import Article
 from module.comment import Comment
+from module.users import Users
 
 article = Blueprint('article', __name__)
 
@@ -28,3 +30,47 @@ def read(article_id):
 
     return render_template('article.html', article_result=article_result, prev_next=prev_next,
                            comment_list=comment_list)
+
+
+@article.route('/prepost')
+def pre_post():
+    return render_template('post-user.html')
+
+
+@article.route('/article', methods=['POST'])
+def add_article():
+    headline = request.form.get('headline')
+    content = request.form.get('content')
+    sort_id = int(request.form.get('sort_id'))
+    drafted = int(request.form.get('drafted'))
+    article_id = int(request.form.get('article_id'))
+
+    if session.get('user_id') is None:
+        return 'perm-denied'
+    else:
+        user = Users().find_by_userid(session.get('user_id'))
+
+        # 首先为文章生成缩略图，优先从内容中找，找不到则随机生成一张
+        url_list = parse_image_url(content)
+        if len(url_list) > 0:   # 表示文章中存在图片
+            thumbname = generate_thumb(url_list)
+        else:
+            # 如果文章中没有图片，则根据文章类别指定一张缩略图
+            thumbname = '%d.png' % sort_id
+
+        article = Article()
+        if article_id == 0:    # 判断article_id是否为0，如果为0则表示是新数据
+            try:
+                id = article.insert_article(sort_id=sort_id, headline=headline, content=content,
+                                            thumbnail=thumbname, drafted=drafted)
+                return str(id)
+            except Exception as e:
+                return 'post-fail'
+        else:   # 如果是已经添加过的文章，则做更新操作
+            try:
+                id = article.update_article(article_id=article_id, sort_id=sort_id,
+                                            headline=headline, content=content,
+                                            thumbnail=thumbname, drafted=drafted)
+                return str(id)
+            except:
+                return 'post-fail'

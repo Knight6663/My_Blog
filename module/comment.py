@@ -128,7 +128,7 @@ class Comment(DBase):
             comment['reply_list'] = model_list(result)
         return comment_list  # 将新的数据结构返回给控制器接口
 
-    def update_opinion(self, comment_id, opinion_type):
+    def update_by_opinion(self, comment_id, opinion_type):
         """
         更新评论表中的点赞数量
         :param comment_id:评论id

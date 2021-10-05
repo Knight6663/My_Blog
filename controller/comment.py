@@ -72,9 +72,10 @@ def do_opinion():
     ip_address = request.remote_addr
 
     opinion = Opinion()
-    if opinion.check_opinion(comment_id, ip_address):   # 判断是否以及点赞
+    is_checked = opinion.check_opinion(comment_id, ip_address)
+    if is_checked:   # 判断是否以及点赞
         return 'already-opinion'
     else:
         opinion.insert_opinion(comment_id, opinion_type, ip_address)
-        Comment().update_opinion(comment_id, opinion_type)
+        Comment().update_by_opinion(comment_id, opinion_type)
         return 'opinion-pass'

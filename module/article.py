@@ -3,6 +3,9 @@
 作者:吕瑞承
 日期:2021年09月27日08时
 """
+from time import strftime
+
+from flask import session
 from sqlalchemy import Table, func
 from common.database import db_connect
 from module.users import Users
@@ -18,10 +21,10 @@ class Article(DBase):
         # 查询所有文章
         result = db_session.query(Article).all()
 
-    def find_by_id(self, artcile_id):
+    def find_by_id(self, article_id):
         # 根据id查询文章
         row = db_session.query(Article, Users.nickname).join(Users, Users.user_id == Article.user_id) \
-            .filter(Article.hidden == 0, Article.article_id == artcile_id).first()
+            .filter(Article.hidden == 0, Article.drafted == 0, Article.article_id == article_id).first()
         return row
 
     def find_limit_with_users(self, start, count):
@@ -30,13 +33,13 @@ class Article(DBase):
         article_result = db_session.query(Article, Users.nickname, Sort.sort_name) \
             .join(Users, Users.user_id == Article.user_id) \
             .join(Sort, Sort.sort_id == Article.sort_id) \
-            .filter(Article.hidden == 0) \
+            .filter(Article.hidden == 0, Article.drafted == 0) \
             .order_by(Article.article_id.desc()).limit(count).offset(start).all()
         return article_result
 
     def get_total_count(self):
         # 返回文章总数量
-        count = db_session.query(Article).filter(Article.hidden == 0).count()
+        count = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 0).count()
         return count
 
     def get_by_type(self, type_id, start, count):
@@ -44,13 +47,13 @@ class Article(DBase):
         result = db_session.query(Article, Users.nickname, Sort.sort_name) \
             .join(Users, Users.user_id == Article.user_id) \
             .join(Sort, Sort.sort_id == Article.sort_id) \
-            .filter(Article.hidden == 0, Article.sort_id == type_id) \
+            .filter(Article.hidden == 0, Article.drafted == 0, Article.sort_id == type_id) \
             .order_by(Article.article_id.desc()).limit(count).offset(start).all()
         return result
 
     def get_count_by_type(self, type_id):
         # 根据文章类型获取总数量
-        count = db_session.query(Article).filter(Article.hidden == 0, Article.sort_id == type_id).count()
+        count = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 0, Article.sort_id == type_id).count()
         return count
 
     def search_by_headline(self, headline, start, count):
@@ -58,32 +61,32 @@ class Article(DBase):
         result = db_session.query(Article, Users.nickname, Sort.sort_name) \
             .join(Users, Users.user_id == Article.user_id) \
             .join(Sort, Sort.sort_id == Article.sort_id) \
-            .filter(Article.hidden == 0, Article.headline.like('%' + headline + '%')) \
+            .filter(Article.hidden == 0, Article.drafted == 0, Article.headline.like('%' + headline + '%')) \
             .order_by(Article.article_id.desc()).limit(count).offset(start).all()
         return result
 
     def get_count_by_headline(self, headline):
         # 根据搜索内容获取满足条件的总数量
-        count = db_session.query(Article).filter(Article.hidden == 0,
+        count = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 0,
                                                  Article.headline.like('%' + headline + '%')).count()
         return count
 
     def find_recent_9(self):
         # 最新文章
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0).order_by(Article.article_id.desc()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.article_id.desc()).limit(9).all()
         return result
 
     def find_read_most_9(self):
         # 阅读量前十
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0).order_by(Article.read_count.desc()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.read_count.desc()).limit(9).all()
         return result
 
     def find_recommended_9(self):
         # 推荐文章,使用order by rand()随机显示几篇
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0, Article.recommended == 1).order_by(func.rand()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0, Article.recommended == 1).order_by(func.rand()).limit(9).all()
         return result
 
     def find_recent_most_recommended(self):
@@ -104,7 +107,10 @@ class Article(DBase):
         """
         article = db_session.query(Article).filter_by(article_id=article_id).first()
         article.read_count += 1
-        db_session.commit()
+        try:
+            db_session.commit()
+        except:
+            db_session.rollback()
 
     def find_headline_by_id(self, article_id):
         """
@@ -124,7 +130,7 @@ class Article(DBase):
         d = {}
 
         # 查询比当前编号小的当中最大的一个
-        res = db_session.query(Article).filter(Article.hidden == 0, Article.article_id < article_id).order_by(
+        res = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 0, Article.article_id < article_id).order_by(
             Article.article_id.desc()).limit(1).first()
 
         # 如果当前已经是第一篇，那么上一篇就是这一篇
@@ -137,7 +143,7 @@ class Article(DBase):
         d['prev_headline'] = self.find_headline_by_id(prev_id)
 
         # 查询比当前编号大的当中最小的一个
-        res = db_session.query(Article).filter(Article.hidden == 0, Article.article_id > article_id).order_by(
+        res = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 0, Article.article_id > article_id).order_by(
             Article.article_id).limit(1).first()
 
         # 如果当前已经是最后一篇，那么下一篇就是这一篇
@@ -163,3 +169,27 @@ class Article(DBase):
             db_session.commit()
         except:
             db_session.rollback()
+
+    def insert_article(self, sort_id, headline, content, thumbnail, drafted=0):
+        """
+        插入一篇新的文章，是否为草稿通过参数进行区分
+        :param sort_id: 分类id
+        :param headline: 标题
+        :param content: 内容
+        :param thumbnail: 文章缩略图
+        :param drafted: 是否为草稿，默认为0
+        :return: 这篇文章的id
+        """
+        now = strftime('%Y-%m-%d %H:%M:%S')
+        user_id = session.get('user_id')
+        # 其他字段在数据库中均已设置好默认值，无须手工插入
+        article = Article(user_id=user_id, sort_id=sort_id, headline=headline, content=content,
+                          thumbnail=thumbnail, drafted=drafted,
+                          create_time=now, update_time=now)
+        try:
+            db_session.add(article)
+            db_session.commit()
+        except:
+            db_session.rollback()
+
+        return article.article_id  # 将新的文章编号返回，便于前端页面跳转

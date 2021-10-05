@@ -38,7 +38,7 @@ class Opinion(DBase):
         防止单个用户多次赞成或反对，以及防止一个用户即赞成又反对，为此做出判断
         :param comment_id: 评论id
         :param ip_address: ip地址
-        :return: 以及点过返回True，反之False
+        :return: 已经点过返回True，反之False
         """
         is_checked = False
         result = db_session.query(Opinion).filter_by(comment_id=comment_id, ip_address=ip_address).all()
