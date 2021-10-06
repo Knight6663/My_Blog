@@ -45,14 +45,14 @@
                 {% for article,nickname,sort_name in result%}
                 <div class="col-12 row article-list">
                     <div class="col-sm-3 col-3 thumb d-none d-sm-block">
-                        <img src="/img/{{article.thumbnail}}" class="img-fluid"/>
+                        <img src="/thumb/{{article.thumbnail}}" width="230" height="200"/>
                     </div>
                     <div class="col-sm-9 col-xs-12 detail">
                         <div class="title"><a href="/article/{{article.article_id}}">{{article.headline}}</a></div>
                         <div class="info">作者:{{nickname}}&nbsp;&nbsp;&nbsp;类别:{{sort_name}}&nbsp;&nbsp;&nbsp;
                             日期:{{article.create_time}}&nbsp;&nbsp;&nbsp;阅读:{{article.read_count}}次</div>
                         <div class="intro">
-                            {{article.content | striptags | truncate(200)}}
+                            {{article.content | striptags | truncate(150)}}
                         </div>
                     </div>
                 </div>

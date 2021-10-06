@@ -74,7 +74,7 @@ def gettype():
     return dict(article_type=article_type)
 
 
-@app.route('/test')
+@app.route('/admin/login')
 def test():
     return render_template('login.html')
 
@@ -107,4 +107,8 @@ if __name__ == '__main__':
 
     app.register_blueprint(ueditor)
 
-    app.run(debug=True)
+    from controller.admin import *
+
+    app.register_blueprint(admin)
+
+    app.run(debug=True,port=80)

@@ -21,6 +21,6 @@ class Users(DBase):
         result = db_session.query(Users).filter_by(username=username).all()
         return result
 
-    def find_by_userid(self, userid):
-        user = db_session.query(Users).filter_by(userid=userid).one()
+    def find_by_userid(self, user_id):
+        user = db_session.query(Users).filter_by(user_id=user_id).one()
         return user

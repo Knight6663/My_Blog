@@ -326,7 +326,9 @@
                 else if (data == "login-pass") {
                     window.alert("恭喜你，登录成功！");
                     // 注册成功后，延迟1秒钟重新刷新当前页面即可
-                    setTimeout('location.reload();', 1000);
+                    setTimeout(function (){
+                        location.href= '/admin';
+                    }, 1000);
                 }
                 else if (data == "login-fail") {
                     window.alert("登录失败，请联系管理员.");

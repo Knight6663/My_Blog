@@ -35,18 +35,18 @@ def login():
 
     else:
         # 实现登录功能
-        # password = hashlib.md5(password.encode()).hexdigest()
         result = user.find_by_username(username)
         if len(result) == 1 and result[0].password == password:
             session['islogin'] = 'true'
-            session['userid'] = result[0].user_id
+            session['user_id'] = result[0].user_id
             session['username'] = username
             session['nickname'] = result[0].nickname
 
             # 将Cookie写入浏览器
             response = make_response('login-pass')
-            response.set_cookie('username', username, max_age=30 * 24 * 3600)
-            response.set_cookie('password', password, max_age=30 * 24 * 3600)
+            # response.set_cookie('username', username, max_age=30 * 24 * 3600)
+            # response.set_cookie('password', password, max_age=30 * 24 * 3600)
+            # 用于自动登录，但是这样不安全，目前不采用
             return response
         else:
             return 'login-fail'

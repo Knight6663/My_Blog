@@ -176,6 +176,10 @@ label{
 .article-detail .content{
     margin-top: 30px;
 }
+
+.article-detail .content img{
+    max-width: 100%;
+}
 /*文章小导航*/
 .article-nav {
     border: solid 1px #cccccc;
@@ -228,7 +232,25 @@ label{
     cursor: pointer;
 }
 
-
+/* 后台管理 */
+.admin-side {
+    margin: 10px 0px;
+    border: solid 1px #cccccc;
+    padding: 20px 0px;
+    background-color: whitesmoke;
+}
+.admin-side ul{
+    list-style: none;
+}
+.admin-side li {
+    line-height: 40px;
+}
+.admin-main {
+    border: solid 1px #cccccc;
+    margin: 10px 0px;
+    background-color: whitesmoke;
+    padding: 15px 0px;
+}
 
 button.goup {
     position: relative;
@@ -289,3 +311,4 @@ button.goup:active {
         left: 50%;
     }
 }
+
