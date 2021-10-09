@@ -116,8 +116,8 @@
         location.href = '/admin/search/' + keyword;
     }
 
-    function switchHide(obj, articleid) {
-        $.get('/admin/article/hide/' + articleid, function (data) {
+    function switchHide(obj, article_id) {
+        $.get('/admin/article/hide/' + article_id, function (data) {
             if (data == '1') {
                 $(obj).html('<font color="red">已隐</font>');
             }
@@ -127,24 +127,13 @@
         });
     }
 
-    function switchRecommend(obj, articleid) {
-        $.get('/admin/article/recommend/' + articleid, function (data) {
+    function switchRecommend(obj, article_id) {
+        $.get('/admin/article/recommend/' + article_id, function (data) {
             if (data == '1') {
                 $(obj).html('<font color="red">已推</font>');
             }
             else {
                 $(obj).text('推荐');
-            }
-        });
-    }
-
-    function switchCheck(obj, articleid) {
-        $.get('/admin/article/check/' + articleid, function (data) {
-            if (data == '0') {
-                $(obj).html('<font color="red">待审</font>');
-            }
-            else {
-                $(obj).text('已审');
             }
         });
     }

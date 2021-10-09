@@ -20,8 +20,7 @@ def uedit():
     if request.method == 'GET' and param == 'config':
         return render_template('config.json')
 
-    # 构造上传图片的接口
-    elif request.method == 'POST' and request.args.get('action') == 'uploadimage':
+    elif request.method == 'POST' and request.args.get('action') == 'uploadimage':  # 构造上传图片的接口
         f = request.files['upfile']  # 获取前端图片文件数据
         file_name = f.filename
 
@@ -38,8 +37,7 @@ def uedit():
 
         return jsonify(result)  # 以JSON数据格式返回响应，供前端编辑器引用
 
-    # 列出所有图片给前端浏览
-    elif request.method == 'GET' and param == 'listimage':
+    elif request.method == 'GET' and param == 'listimage':  # 列出所有图片给前端浏览
         list = []
         file_list = listdir('./resource/upload')
         # 将所有图片构建成可访问的URL地址并添加到列表中

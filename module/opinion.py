@@ -4,14 +4,12 @@
 日期:2021年10月05日15时
 """
 
-
-from flask import session, request
 from sqlalchemy import Table
 from common.database import db_connect
 from time import strftime
-import random
 
 db_session, md, DBase = db_connect()
+
 
 class Opinion(DBase):
     __table__ = Table('opinion', md, autoload=True)

@@ -4,17 +4,20 @@
 日期:2021年10月06日11时
 """
 
-from flask import Blueprint, render_template, session, request, jsonify
+from flask import Blueprint, render_template, session, request, redirect
 from module.article import Article
-import math
+from math import ceil
 
 admin = Blueprint("admin", __name__)
 
 
 @admin.before_request
 def before_admin():
+    if request.path == '/admin/login':
+        return None
+
     if session.get('islogin') != 'true':
-        return 'perm-denied'
+        return redirect('/admin/login')
 
 
 # 为系统管理首页填充文章列表，并绘制分页栏
@@ -23,7 +26,7 @@ def sys_admin():
     pagesize = 50
     article = Article()
     result = article.find_all_except_draft(0, pagesize)
-    total = math.ceil(article.get_count_except_draft() / pagesize)
+    total = ceil(article.get_count_except_draft() / pagesize)
     return render_template('admin.html', page=1, result=result, total=total)
 
 
@@ -34,7 +37,7 @@ def admin_article(page):
     start = (page - 1) * pagesize
     article = Article()
     result = article.find_all_except_draft(start, pagesize)
-    total = math.ceil(article.get_count_except_draft() / pagesize)
+    total = ceil(article.get_count_except_draft() / pagesize)
     return render_template('admin.html', page=page, result=result, total=total)
 
 
@@ -51,7 +54,7 @@ def admin_search_type(sort_id, page):
     pagesize = 50
     start = (page - 1) * pagesize
     result, total = Article().find_by_type_except_draft(start, pagesize, sort_id)
-    total = math.ceil(total / pagesize)
+    total = ceil(total / pagesize)
     return render_template('admin.html', page=page, result=result, total=total)
 
 

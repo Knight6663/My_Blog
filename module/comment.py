@@ -4,7 +4,6 @@
 日期:2021年10月03日23时
 """
 
-from flask import session, request
 from sqlalchemy import Table
 from common.database import db_connect
 from time import strftime

@@ -3,7 +3,7 @@
 作者:吕瑞承
 日期:2021年09月27日07时
 """
-from flask import Flask, abort, render_template
+from flask import Flask
 import os
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
@@ -16,6 +16,8 @@ app.config['SECRET_KEY'] = os.urandom(24)  # 解决session的随机种子
 # 使用集成方式处理SQLAlchemy
 app.config['SQLALCHEMY_DATABASE_URI'] = "mysql://root:2211@localhost:3306/lrc's-blog?charset=utf8"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # True:跟踪数据库的修改，及时发送信号
+app.config['WHOOSH_BASE'] = 'whoosh_index'
+app.config['WHOOSH_ENABLE'] = True
 
 # 实例化db对象
 db = SQLAlchemy(app)
@@ -111,4 +113,4 @@ if __name__ == '__main__':
 
     app.register_blueprint(admin)
 
-    app.run(debug=True,port=80)
+    app.run(debug=True, port=80)

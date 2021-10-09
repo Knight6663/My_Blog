@@ -269,7 +269,6 @@ class Article(DBase):
                                                      Article.sort_id == sort_id).count()
         return result, total
 
-
     def find_by_headline_except_draft(self, headline):
         """
         按照标题模糊查询（不含草稿）
@@ -287,7 +286,7 @@ class Article(DBase):
         :param article_id: 文章id
         :return: 当前最新状态
         """
-        row = db_session.query(Article).filter_by(articleid=article_id).first()
+        row = db_session.query(Article).filter_by(article_id=article_id).first()
         if row.hidden == 1:
             row.hidden = 0
         else:
