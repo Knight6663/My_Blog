@@ -13,42 +13,59 @@ from module.article import Article
 index = Blueprint("index", __name__)
 
 
+# @index.route('/')
+# def home():
+#     # 判断是否存在该页面，如果存在则直接响应，否则正常查询数据库
+#     if path.exists('./template/index-static/index-1.html'):
+#         return render_template('index-static/index-1.html')
+#
+#     else:  # 如果不存在该页面，则正常查询数据库，并生成该页面
+#         article = Article()
+#         result = article.find_limit_with_users(0, 7)
+#         total = ceil(article.get_total_count() / 7)
+#         content = render_template('index.html', result=result, page=1, total=total)
+#
+#         # 如果是第一个用户访问，而静态文件不存在，则生成一个
+#         with open('./template/index-static/index-1.html', mode='w', encoding='utf-8') as file:
+#             file.write(content)
+#
+#         return content
+#
+#
+# @index.route('/page/<int:page>')
+# def paginate(page):
+#     if path.exists(f'./template/index-static/index-{page}.html'):  # 判断是否存在该页面，如果存在则直接响应，否则正常查询数据库
+#         return render_template(f'index-static/index-{page}.html')
+#
+#     else:  # 下述代码跟之前版本保持不变，正常查询数据库
+#         start = (page - 1) * 7
+#         article = Article()
+#         result = article.find_limit_with_users(start, 7)
+#         total = ceil(article.get_total_count() / 7)
+#         content = render_template('index.html', result=result, page=page, total=total)
+#
+#         # 如果是第一个用户访问，而静态文件不存在，则生成一个
+#         with open(f'./template/index-static/index-{page}.html', mode='w', encoding='utf-8') as file:
+#             file.write(content)
+#
+#         return content
+
+
 @index.route('/')
 def home():
-    # 判断是否存在该页面，如果存在则直接响应，否则正常查询数据库
-    if path.exists('./template/index-static/index-1.html'):
-        return render_template('index-static/index-1.html')
-
-    else:  # 如果不存在该页面，则正常查询数据库，并生成该页面
-        article = Article()
-        result = article.find_limit_with_users(0, 7)
-        total = ceil(article.get_total_count() / 7)
-        content = render_template('index.html', result=result, page=1, total=total)
-
-        # 如果是第一个用户访问，而静态文件不存在，则生成一个
-        with open('./template/index-static/index-1.html', mode='w', encoding='utf-8') as file:
-            file.write(content)
-
-        return content
+    article = Article()
+    total = ceil(article.get_total_count() / 7)
+    result = article.find_limit_with_users(0, 7)
+    return render_template('index.html', result=result, page=1, total=total, )
 
 
 @index.route('/page/<int:page>')
 def paginate(page):
-    if path.exists(f'./template/index-static/index-{page}.html'):  # 判断是否存在该页面，如果存在则直接响应，否则正常查询数据库
-        return render_template(f'index-static/index-{page}.html')
-
-    else:  # 下述代码跟之前版本保持不变，正常查询数据库
-        start = (page - 1) * 7
-        article = Article()
-        result = article.find_limit_with_users(start, 7)
-        total = ceil(article.get_total_count() / 7)
-        content = render_template('index.html', result=result, page=page, total=total)
-
-        # 如果是第一个用户访问，而静态文件不存在，则生成一个
-        with open(f'./template/index-static/index-{page}.html', mode='w', encoding='utf-8') as file:
-            file.write(content)
-
-        return content
+    article = Article()
+    start = (page - 1) * 7
+    total = ceil(article.get_total_count() / 7)
+    result = article.find_limit_with_users(start, 7)
+    return render_template('index.html', result=result, page=page, total=total)
 
 
 @index.route('/type/<type_id>/<int:page>')

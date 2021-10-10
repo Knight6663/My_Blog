@@ -82,23 +82,23 @@ class Article(DBase):
                                                  Article.headline.like('%' + headline + '%')).count()
         return count
 
-    def find_recent_9(self):
+    def find_recent_10(self):
         # 最新文章
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.create_time.desc()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.create_time.desc()).limit(10).all()
         return result
 
-    def find_read_most_9(self):
+    def find_read_most_10(self):
         # 阅读量前十
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.read_count.desc()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.read_count.desc()).limit(10).all()
         return result
 
-    def find_recommended_9(self):
+    def find_recommended_10(self):
         # 推荐文章,使用order by rand()随机显示几篇
         result = db_session.query(Article.article_id, Article.headline). \
             filter(Article.hidden == 0, Article.drafted == 0, Article.recommended == 1).order_by(func.rand()).limit(
-            9).all()
+            10).all()
         return result
 
     def find_recent_most_recommended(self):
@@ -106,9 +106,9 @@ class Article(DBase):
         一次性将三个边栏的数据都传进去
         :return: 一次性将边栏三个全部传进去
         """
-        recent = self.find_recent_9()
-        most = self.find_read_most_9()
-        recommended = self.find_recommended_9()
+        recent = self.find_recent_10()
+        most = self.find_read_most_10()
+        recommended = self.find_recommended_10()
         return recent, most, recommended
 
     def updata_read_count(self, article_id):

@@ -30,6 +30,11 @@ def sys_admin():
     return render_template('admin.html', page=1, result=result, total=total)
 
 
+@admin.route('/admin/prepost')
+def pre_post():
+    return render_template('post.html')
+
+
 # 为系统管理首页的文章列表进行分页查询
 @admin.route('/admin/article/<int:page>')
 def admin_article(page):
