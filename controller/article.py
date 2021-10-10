@@ -3,8 +3,8 @@
 作者:吕瑞承
 日期:2021年10月02日23时
 """
-from os import listdir, remove
 
+import os
 from flask import Blueprint, render_template, abort, request, session
 
 from common.utility import parse_image_url, generate_thumb
@@ -67,9 +67,9 @@ def add_article():
                                                 thumbnail=thumbname, drafted=drafted)
 
                     # 新增文章成功后，将已经静态化的文章列表页面全部删除，便于生成新的静态文件
-                    index_static_file = listdir('./template/index-static/')
+                    index_static_file = os.listdir('../template/index-static/')
                     for file in index_static_file:
-                        remove('./template/index-static/' + file)
+                        os.remove('../template/index-static/' + file)
 
                     return str(id)
                 except Exception as e:

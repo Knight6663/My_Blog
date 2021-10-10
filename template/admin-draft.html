@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- 中部区域布局 -->
+<div class="container" style="margin-top: 10px;">
+    <div class="row">
+        <div class="col-sm-2 col-12" style="padding: 0px 10px; ">
+            <div class="col-12 admin-side" style="height: 360px">
+                <!-- 为左侧菜单栏添加正确的超链接 -->
+                <ul>
+                    <li><a href="/prepost"><span class="oi oi-zoom-in" aria-hidden="true"></span>&nbsp;&nbsp;发布文章</a></li>
+                    <li><a href="/admin"><span class="oi oi-image" aria-hidden="true"></span>&nbsp;&nbsp;文章管理</a></li>
+                    <li><a href="/admin/draft"><span class="oi oi-image" aria-hidden="true"></span>&nbsp;&nbsp; 草稿管理</a></li>
+<!--                    <li><a href="/admin/comment"><span class="oi oi-task" aria-hidden="true"></span>&nbsp;&nbsp;评论管理</a></li>-->
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-10 col-12" style="padding: 0px 10px">
+            <div class="col-12 admin-main">
+
+
+                <div class="col-12" style="padding: 10px;">
+                    <table class="table col-12">
+                        <thead style="font-weight: bold">
+                        <tr>
+                            <td width="10%" align="center">编号</td>
+                            <td width="58%">标题</td>
+                            <td width="32%" align="">操作</td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for article in result %}
+                        <tr>
+                            <td align="center">{{article.article_id}}</td>
+                            <td><a href="#" target="_blank">{{article.headline}}</a></td>
+                            <td>
+                                <a href="/admin/edit_draft/{{article.article_id}}" target="_blank">
+                                    继续编辑
+                                </a>&nbsp;&nbsp;&nbsp;
+                            </td>
+                        </tr>
+                        </tbody>
+                        {% endfor %}
+                    </table>
+
+                    <table class="table col-12">
+                        <tr>
+                            <td valign="middle" align="center">
+                                {% if page == 1 %}
+                                <a href="/admin/draft/1">上一页</a>&nbsp;&nbsp;
+                                {% else %}
+                                <a href="/admin/draft/{{page - 1}}">上一页</a>&nbsp;&nbsp;
+                                {% endif %}
+
+                                {% for i in range(total) %}
+                                <a href="/admin/draft/{{i + 1}}">{{i + 1}}</a>&nbsp;&nbsp;
+                                {% endfor %}
+
+                                {% if page == total %}
+                                <a href="/admin/draft/{{page}}">下一页</a>
+                                {% else %}
+                                <a href="/admin/draft/{{page + 1}}">下一页</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // 为了直接展示搜索结果，不需要使用Ajax，而是直接跳转页面即可
+    function doSearchByType() {
+        var type = $("#type").val();
+        location.href = '/admin/type/' + type + '-1';
+    }
+
+    function doSearchByHeadline() {
+        var keyword = $("#keyword").val();
+        location.href = '/admin/search/' + keyword;
+    }
+</script>
+
+{% endblock %}

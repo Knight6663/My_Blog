@@ -32,6 +32,11 @@ class Article(DBase):
                                                Article.article_id == article_id).first()
         return row
 
+    def find_article_by_id_and_draft(self, article_id):
+        row = db_session.query(Article).filter(Article.hidden == 0, Article.drafted == 1,
+                                               Article.article_id == article_id).first()
+        return row
+
     def find_limit_with_users(self, start, count):
         # 指定分页的limit和offset的参数值，同时与用户表做连接查询
         # 三表查询(包含article,users,sort三张表)
@@ -80,7 +85,7 @@ class Article(DBase):
     def find_recent_9(self):
         # 最新文章
         result = db_session.query(Article.article_id, Article.headline). \
-            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.article_id.desc()).limit(9).all()
+            filter(Article.hidden == 0, Article.drafted == 0).order_by(Article.create_time.desc()).limit(9).all()
         return result
 
     def find_read_most_9(self):
@@ -313,3 +318,52 @@ class Article(DBase):
         except:
             db_session.rollback()
         return row.recommended
+
+    def find_all_by_draft(self, start, count):
+        """
+        查询article表中除草稿外的所有数据并返回结果集
+        :param start:
+        :param count:
+        :return: article表中除草稿外的所有数据
+        """
+        result = db_session.query(Article).filter(Article.drafted == 1).order_by(
+            Article.article_id.desc()).limit(count).offset(start).all()
+        return result
+
+    def get_count_by_draft(self):
+        """
+        查询是草稿的所有文章的总数量
+        :return: 除草稿外的所有文章的总数量
+        """
+        count = db_session.query(Article).filter(Article.drafted == 1).count()
+        return count
+
+    def find_by_type_by_draft(self, start, count, sort_id):
+        """
+        按照文章分类进行查询
+        :param start:
+        :param count:
+        :param sort_id: 分类id
+        :return: 分页结果集和不分页的总数量
+        """
+        if sort_id == 0:
+            result = self.find_all_by_draft(start, count)
+            total = self.get_count_by_draft()
+        else:
+            result = db_session.query(Article).filter(Article.drafted == 1,
+                                                      Article.sort_id == sort_id).order_by(Article.article_id.desc()) \
+                .limit(count).offset(start).all()
+            total = db_session.query(Article).filter(Article.drafted == 1,
+                                                     Article.sort_id == sort_id).count()
+        return result, total
+
+    def find_by_headline_by_draft(self, headline):
+        """
+        按照标题模糊查询（只含草稿）
+        :param headline: 标题
+        :return: 查询结果
+        """
+        result = db_session.query(Article).filter(Article.drafted == 1,
+                                                  Article.headline.like('%' + headline + '%')) \
+            .order_by(Article.article_id.desc()).all()
+        return result

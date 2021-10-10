@@ -41,9 +41,35 @@ def admin_article(page):
     return render_template('admin.html', page=page, result=result, total=total)
 
 
+@admin.route('/admin/draft')
+def admin_draft():
+    pagesize = 50
+    article = Article()
+    result = article.find_all_by_draft(0, pagesize)
+    total = ceil(article.get_count_by_draft() / pagesize)
+    return render_template('admin-draft.html', page=1, result=result, total=total)
+
+
+@admin.route('/admin/draft/<int:page>')
+def draft_page(page):
+    pagesize = 50
+    start = (page - 1) * pagesize
+    article = Article()
+    result = article.find_all_by_draft(start, pagesize)
+    total = ceil(article.get_count_by_draft() / pagesize)
+    return render_template('admin-draft.html', page=page, result=result, total=total)
+
+
 @admin.route('/admin/edit/<int:article_id>')
 def admin_edit_article(article_id):
     article = Article().find_article_by_id(article_id)
+
+    return render_template('post-edit.html', article=article)
+
+
+@admin.route('/admin/edit_draft/<int:article_id>')
+def admin_edit_drafted_article(article_id):
+    article = Article().find_article_by_id_and_draft(article_id)
 
     return render_template('post-edit.html', article=article)
 
