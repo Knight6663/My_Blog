@@ -318,19 +318,19 @@
             param += "&vcode=" + logincode;
             // 利用jQuery框架发送POST请求，并获取到后台登录接口的响应内容
             $.post('/login', param, function (data) {
-                if (data == "vcode-error") {
+                if (data === "vcode-error") {
                     window.alert("验证码错误！");
                     $("#logincode").val('');  // 清除验证码框的值
                     $("#logincode").focus();   // 让验证码框获取到焦点供用户输入
                 }
-                else if (data == "login-pass") {
+                else if (data === "login-pass") {
                     window.alert("恭喜你，登录成功！");
                     // 注册成功后，延迟1秒钟重新刷新当前页面即可
                     setTimeout(function (){
                         location.href= '/admin';
                     }, 1000);
                 }
-                else if (data == "login-fail") {
+                else if (data === "login-fail") {
                     window.alert("登录失败，请联系管理员.");
                 }
             });
